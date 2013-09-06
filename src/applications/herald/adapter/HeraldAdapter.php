@@ -44,6 +44,7 @@ abstract class HeraldAdapter {
   const ACTION_NOTHING    = 'nothing';
   const ACTION_AUDIT      = 'audit';
   const ACTION_FLAG       = 'flag';
+  const ACTION_MARK_SECURITY       = 'mark-security';
 
   const VALUE_TEXT            = 'text';
   const VALUE_NONE            = 'none';
@@ -426,6 +427,7 @@ abstract class HeraldAdapter {
           self::ACTION_EMAIL      => pht('Send an email to'),
           self::ACTION_AUDIT      => pht('Trigger an Audit by'),
           self::ACTION_FLAG       => pht('Mark with flag'),
+          self::ACTION_MARK_SECURITY       => pht('Mark for security review'),
         );
       case HeraldRuleTypeConfig::RULE_TYPE_PERSONAL:
         return array(
@@ -435,6 +437,7 @@ abstract class HeraldAdapter {
           self::ACTION_EMAIL      => pht('Send me an email'),
           self::ACTION_AUDIT      => pht('Trigger an Audit by me'),
           self::ACTION_FLAG       => pht('Mark with flag'),
+          self::ACTION_MARK_SECURITY       => pht('Mark for security review'),
         );
       default:
         throw new Exception("Unknown rule type '{$rule_type}'!");
@@ -470,6 +473,7 @@ abstract class HeraldAdapter {
           }
           break;
         case self::ACTION_NOTHING:
+        case self::ACTION_MARK_SECURITY:
           break;
         default:
           throw new HeraldInvalidActionException(
@@ -556,6 +560,7 @@ abstract class HeraldAdapter {
         case self::ACTION_REMOVE_CC:
         case self::ACTION_EMAIL:
           return self::VALUE_EMAIL;
+        case self::ACTION_MARK_SECURITY:
         case self::ACTION_NOTHING:
           return self::VALUE_NONE;
         case self::ACTION_AUDIT:
