@@ -302,6 +302,14 @@ final class HeraldDifferentialRevisionAdapter extends HeraldAdapter {
             true,
             pht('OK, did nothing.'));
           break;
+        case HeraldActionConfig::ACTION_MARK_SECURITY:
+          $this->auxiliaryFieldValues['dropbox:security-review'] = '1';
+
+          $result[] = new HeraldApplyTranscript(
+            $effect,
+            true,
+            pht('Marked for security review.'));
+          break;
         case self::ACTION_FLAG:
           $result[] = parent::applyFlagEffect(
             $effect,

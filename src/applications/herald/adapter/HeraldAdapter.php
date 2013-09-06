@@ -44,6 +44,7 @@ abstract class HeraldAdapter {
   const ACTION_NOTHING    = 'nothing';
   const ACTION_AUDIT      = 'audit';
   const ACTION_FLAG       = 'flag';
+  const ACTION_MARK_SECURITY       = 'flag';
 
   const VALUE_TEXT            = 'text';
   const VALUE_NONE            = 'none';
@@ -426,6 +427,7 @@ abstract class HeraldAdapter {
           self::ACTION_EMAIL      => pht('Send an email to'),
           self::ACTION_AUDIT      => pht('Trigger an Audit by'),
           self::ACTION_FLAG       => pht('Mark with flag'),
+          self::ACTION_MARK_SECURITY       => pht('Mark for security review'),
         );
       case HeraldRuleTypeConfig::RULE_TYPE_PERSONAL:
         return array(
@@ -469,7 +471,8 @@ abstract class HeraldAdapter {
             $target = PhabricatorFlagColor::COLOR_BLUE;
           }
           break;
-        case self::ACTION_NOTHING:
+          case self::ACTION_NOTHING:
+          case self::ACTION_MARK_SECURITY:
           break;
         default:
           throw new HeraldInvalidActionException(
@@ -556,6 +559,7 @@ abstract class HeraldAdapter {
         case self::ACTION_REMOVE_CC:
         case self::ACTION_EMAIL:
           return self::VALUE_EMAIL;
+        case self::ACTION_MARK_SECURITY:
         case self::ACTION_NOTHING:
           return self::VALUE_NONE;
         case self::ACTION_AUDIT:
