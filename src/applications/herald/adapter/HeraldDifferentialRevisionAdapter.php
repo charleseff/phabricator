@@ -15,6 +15,7 @@ final class HeraldDifferentialRevisionAdapter extends HeraldAdapter {
   protected $newCCs = array();
   protected $remCCs = array();
   protected $emailPHIDs = array();
+  protected $auxiliaryFieldValues = array();
 
   protected $repository;
   protected $affectedPackages;
@@ -94,6 +95,10 @@ final class HeraldDifferentialRevisionAdapter extends HeraldAdapter {
 
   public function getEmailPHIDsAddedByHerald() {
     return $this->emailPHIDs;
+  }
+
+  public function getAuxiliaryFieldValues() {
+    return $this->auxiliaryFieldValues;
   }
 
   public function getPHID() {
@@ -301,6 +306,14 @@ final class HeraldDifferentialRevisionAdapter extends HeraldAdapter {
           $result[] = parent::applyFlagEffect(
             $effect,
             $this->revision->getPHID());
+          break;
+        case self::ACTION_MARK_SECURITY:
+          $this->auxiliaryFieldValues['dropbox:security-review'] = '1';
+
+          $result[] = new HeraldApplyTranscript(
+            $effect,
+            true,
+            pht('Marked for security review.'));
           break;
         case self::ACTION_EMAIL:
         case self::ACTION_ADD_CC:
