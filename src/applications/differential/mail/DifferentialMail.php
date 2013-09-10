@@ -400,7 +400,6 @@ abstract class DifferentialMail extends PhabricatorMail {
     $selector = DifferentialFieldSelector::newSelector();
     $aux_fields = $selector->sortFieldsForMail(
       $selector->getFieldSpecifications());
-    DifferentialAuxiliaryField::loadFromStorage($this->getRevision(), $aux_fields);
 
     $body = array();
     foreach ($aux_fields as $field) {

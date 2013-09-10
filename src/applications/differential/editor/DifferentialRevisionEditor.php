@@ -248,14 +248,6 @@ final class DifferentialRevisionEditor extends PhabricatorEditor {
         $revision->getPHID(),
         $xscript_header);
 
-      $values = $adapter->getAuxiliaryFieldValues();
-      foreach ($this->auxiliaryFields as $field) {
-        $key = $field->getStorageKey();
-        if ($key !== null && isset($values[$key])) {
-          $field->setValueFromStorage($values[$key]);
-        }
-      }
-
       $sub = array(
         'rev' => array(),
         'ccs' => $adapter->getCCsAddedByHerald(),
